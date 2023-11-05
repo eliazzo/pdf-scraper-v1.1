@@ -1,18 +1,18 @@
 import fitz  # PyMuPDF
 
-# Open the provided PDF file to extract tables
+# Open the PDF file to extract tables
 pdf_document = fitz.open('sample report card.pdf')
 
 # Placeholder for all tables found
 tables = []
 
-# Extract tables from the first page since there is only one page
+# Extract tables from the the first page
 page = pdf_document[0]
 page_dict = page.get_text("dict", flags=fitz.TEXT_PRESERVE_IMAGES)
 blocks = page_dict["blocks"]
 
 for b in blocks:  # iterate through the text blocks
-    if "lines" in b:  # Check if the block contains lines
+    if "lines" in b:  # if the block contains lines
         table_rows = []
         for line in b["lines"]:
             row_data = []
@@ -31,5 +31,5 @@ import json  # Re-import the json module for JSON operations
 # Convert the table data to JSON, since we already have the 'tables' list from the previous code
 json_tables = json.dumps(tables, indent=4) if tables else json.dumps("No tables found")
 
-print (json_tables)  # Display the JSON data
+print (json_tables)  # print the JSON data to the console
 
